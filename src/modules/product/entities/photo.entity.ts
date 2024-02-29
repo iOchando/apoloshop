@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ProductEntity } from './product.entity';
 
-@Entity()
+@Entity({ name: 'photos' })
 export class PhotoEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
@@ -14,6 +14,7 @@ export class PhotoEntity {
 
   @ManyToOne((type) => ProductEntity, (product) => product.photos, {
     nullable: true,
+    onDelete: 'CASCADE',
   })
   product: ProductEntity;
 

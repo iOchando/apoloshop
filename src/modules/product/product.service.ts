@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { HttpException, Injectable } from '@nestjs/common';
+import { CreateProductDto, ProductDto, UpdateProductDto } from './dto/product.dto';
+import { ProductEntity } from './entities/product.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HttpStatus } from 'src/shared/enums/httpStatus.enum';
+import { StoreService } from '../store/store.service';
+import { CategoryService } from '../category/category.service';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class ProductService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(
+    @InjectRepository(ProductEntity)
+    private readonly productRepository: Repository<ProductEntity>,
+    private readonly storeService: StoreService,
+    private readonly categoryService: CategoryService,
+  ) {}
+
+  async create(productDto: ProductDto) {
+    await this.storeService.findOne(productDto.store);
+
+    await this.categoryService.findOne(productDto.category);
+
+    const newProduct = plainToClass(ProductEntity, productDto);
+
+    console.log(newProduct);
+
+    return await this.productRepository.save(newProduct);
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll(): Promise<ProductEntity[]> {
+    return await this.productRepository.find({
+      relations: ['category', 'photos', 'store'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    try {
+      return await this.productRepository.findOne({
+        where: { id },
+        relations: ['category', 'photos'],
+      });
+    } catch (error) {
+      throw new HttpException('Product not found', HttpStatus.HTTP_400_BAD_REQUEST);
+    }
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  update(id: string, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} product`;
   }
 }

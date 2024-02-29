@@ -23,10 +23,10 @@ export class DiscountEntity {
   })
   discountType: DiscountType;
 
-  @OneToMany((type) => ProductEntity, (product) => product.discount, {
-    nullable: true,
-  })
-  products: ProductEntity[];
+  // @OneToMany((type) => ProductEntity, (product) => product.discount, {
+  //   nullable: true,
+  // })
+  // products: ProductEntity[];
 
   @OneToOne((type) => StoreEntity, { nullable: true })
   store: StoreEntity;

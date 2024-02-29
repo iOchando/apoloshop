@@ -1,18 +1,11 @@
 import { StoreEntity } from 'src/modules/store/entities/store.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { CategoryEntity } from '../../category/entities/category.entity';
 import { ConditionProduct } from '../enums/conditionProduct.enum';
 import { WarrantyType } from '../enums/warrantyType.enum';
 import { PhotoEntity } from './photo.entity';
 import { ExposureType } from '../enums/ExposureType.enum';
-import { DiscountEntity } from '../../discount/entities/discount.entity';
+// import { DiscountEntity } from '../../discount/entities/discount.entity';
 
 @Entity({ name: 'products' })
 export class ProductEntity {
@@ -64,14 +57,16 @@ export class ProductEntity {
   @Column()
   nationalShipping: boolean;
 
-  @OneToMany((type) => PhotoEntity, (photo) => photo.product)
+  @OneToMany((type) => PhotoEntity, (photo) => photo.product, {
+    cascade: true,
+  })
   photos: PhotoEntity[];
 
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @ManyToOne((type) => DiscountEntity, (discount) => discount.products)
-  discount: DiscountEntity;
+  // @ManyToOne((type) => DiscountEntity, (discount) => discount.products)
+  // discount: DiscountEntity;
 
   @Column({
     type: 'enum',

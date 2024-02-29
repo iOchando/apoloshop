@@ -97,8 +97,8 @@ export class StoreEntity {
   })
   socialNetworks: SocialNetworkEntity[];
 
-  @OneToOne((type) => DiscountEntity, { nullable: true })
-  discount: DiscountEntity;
+  // @OneToOne((type) => DiscountEntity, { nullable: true })
+  // discount: DiscountEntity;
 
   @CreateDateColumn({
     name: 'created_at',

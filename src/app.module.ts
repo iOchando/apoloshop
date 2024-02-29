@@ -6,7 +6,6 @@ import { TasksModule } from './tasks/tasks.module';
 import { StoreModule } from './modules/store/store.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
-import { DiscountModule } from './modules/discount/discount.module';
 import { ServiceModule } from './modules/service/service.module';
 
 @Module({
@@ -27,7 +26,6 @@ import { ServiceModule } from './modules/service/service.module';
     CategoryModule,
     ProductModule,
     TasksModule,
-    DiscountModule,
     ServiceModule,
   ],
   controllers: [],

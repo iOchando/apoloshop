@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DiscountService } from './discount.service';
-import { CreateDiscountDto } from './dto/discount.dto';
-import { UpdateDiscountDto } from './dto/update-discount.dto';
+import { CreateDiscountDto, UpdateDiscountDto } from './dto/discount.dto';
 
 @Controller('discount')
 export class DiscountController {
   constructor(private readonly discountService: DiscountService) {}
 
   @Post()
-  create(@Body() createDiscountDto: CreateDiscountDto) {
+  create(@Body() createDiscountDto: any) {
     return this.discountService.create(createDiscountDto);
   }
 

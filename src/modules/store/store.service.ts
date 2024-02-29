@@ -26,7 +26,7 @@ export class StoreService {
 
   async findAll(): Promise<StoreEntity[]> {
     return await this.storeRepository.find({
-      relations: ['category', 'socialNetworks', 'discount'],
+      relations: ['category', 'socialNetworks'],
     });
   }
 
@@ -34,7 +34,7 @@ export class StoreService {
     try {
       return await this.storeRepository.findOne({
         where: { id },
-        relations: ['category', 'socialNetworks', 'discount'],
+        relations: ['category', 'socialNetworks'],
       });
     } catch (error) {
       throw new HttpException('Store not found', HttpStatus.HTTP_400_BAD_REQUEST);
@@ -45,7 +45,7 @@ export class StoreService {
     try {
       return await this.storeRepository.findOne({
         where: { userId },
-        relations: ['category', 'socialNetworks', 'discount'],
+        relations: ['category', 'socialNetworks'],
       });
     } catch (error) {
       throw new HttpException('Store not found', HttpStatus.HTTP_400_BAD_REQUEST);

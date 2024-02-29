@@ -110,6 +110,8 @@ export class StoreController {
       throw new HttpException('Social networks is not an array.', HttpStatus.HTTP_400_BAD_REQUEST);
     }
 
+    console.log(parsedNetworks);
+
     return parsedNetworks.map((network) => ({
       name: network.name,
       username: network.username,
